@@ -26,17 +26,19 @@ jobs:
       - name: Install pnpm
         uses: pnpm/action-setup@v4
         with:
-          # 🟢 拿掉固定的版號，直接留空，讓它自動去讀取你的 pnpm-lock.yaml 的版本
           run_install: false
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 22 # 🟢 升級到 Node 22，解決原本的 20 警告
+          node-version: 22
           cache: 'pnpm'
 
       - name: Install dependencies
+        # 🟢 加上指令與環境變數，避免相容性或特殊安全性機制阻擋 pnpm 安裝
         run: pnpm install --no-frozen-lockfile
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build project
         run: pnpm build
