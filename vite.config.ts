@@ -153,6 +153,7 @@ function vitePluginManusDebugCollector(): Plugin {
 const plugins = [react(), tailwindcss(), jsxLocPlugin(), vitePluginManusRuntime(), vitePluginManusDebugCollector()];
 
 export default defineConfig({
+  base: '/PDF_Translation/', // 👈 務必加入這一行，確保 GitHub Pages 的相對路徑正確
   plugins,
   resolve: {
     alias: {
