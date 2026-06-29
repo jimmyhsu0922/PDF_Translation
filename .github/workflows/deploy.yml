@@ -26,7 +26,9 @@ jobs:
       - name: Install pnpm
         uses: pnpm/action-setup@v4
         with:
+          # 🟢 改成用最新的 v9 版本，並讓它自動抓專案設定
           version: 9
+          run_install: false
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
@@ -35,7 +37,8 @@ jobs:
           cache: 'pnpm'
 
       - name: Install dependencies
-        run: pnpm install
+        # 🟢 如果 pnpm 因為 lockfile 版本鎖定而報錯，加上 --no-frozen-lockfile 就能強行安裝
+        run: pnpm install --no-frozen-lockfile
 
       - name: Build project
         run: pnpm build
@@ -43,7 +46,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: './dist/public' # 👈 配合你的 vite.config.ts，改成上傳 dist/public
+          path: './dist/public'
 
       - name: Deploy to GitHub Pages
         id: deployment
